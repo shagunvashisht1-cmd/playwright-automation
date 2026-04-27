@@ -1,0 +1,66 @@
+import {test, expect, request}from "@playwright/test"; //request API is used to make API calls in our tests. We can use it to make GET, POST, PUT, DELETE, etc. API calls in our tests. This is especially useful when we want to verify the response of the API calls or when we want to perform some actions based on the response of the API calls. 
+ 
+
+const {APIUtils} = require('./utils/APIUtils');
+const loginPayload= {userEmail: "sh.v1@gmail.com", userPassword: "123456789@aS"};//payload for the login API call 
+
+let response;
+// let token;
+// let orderID; //when not initializing use let
+const orderPayload= {   orders: [ { country: "Cuba", productOrderedId: "6960eae1c941646b7a8b3ed3"} ] }; //payload for the order API call which we will use to place the order in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests.
+test.beforeAll(async()=> { //before all test cases this will run
+ //just like browser scontext creation and page creation we can also create request object which we can use to make API calls in our tests. 
+ const apiContext= await request.newContext(); //create a new request context which we can use to make API calls in our tests. 
+ //url from network header , data / body from payload and headers from request headers of the API call which we want to make in our tests. 
+  // request.newContext  To be created in test class
+ const ApiUtils =new APIUtils(apiContext,loginPayload);
+    response=await ApiUtils.createOrder(orderPayload);
+});
+
+// test.beforeEach(async ()=>{ //before each test case this will run
+
+// })
+
+test("Web API Usage 1", async({page})=>{
+   
+    const productTitle= page.locator(".card-body b"); 
+    const products= page.locator(".card-body");
+    const productName= "ZARA COAT 3";
+    await page.addInitScript(value => {
+    window.localStorage.setItem("token", value); //set the token in the local storage of the browser before the page is loaded. This is especially useful when we want to set some values in the local storage before the page is loaded. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to set some values in the local storage before the page is loaded.
+}, response.token);
+    await page.goto("https://rahulshettyacademy.com/client/"); //navigate to the page after setting the token in the local storage of the browser. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser.
+
+//await page.waitForLoadState("networkidle"); //wait for the network to be idle before performing any action on the page. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some API calls to be completed before performing any action on the page.
+//await titles.waitFor(); //wait for the element located by the locator to be visible before performing any action on it. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some elements to be visible before performing any action on them.    
+//waitFor() works on single element locator so use first or last method
+
+//Go to Orders page
+
+await page.locator("button[routerlink*='orders']").click();
+await page.locator("tbody").waitFor(); //wait for the table body to be visible before performing any action on it. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some elements to be visible before performing any action on them.
+//await page.waitForLoadState("networkidle"); //wait for the network to be idle before performing any action on the page. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some API calls to be completed before performing any action on the page.
+
+const orderCount = await page.locator("tbody tr").count();
+
+console.log(orderCount);
+
+for(let i=0; i<orderCount; ++i){
+if(response.orderID.includes(await page.locator("tbody tr").nth(i).locator("th").textContent())){
+     
+   await page.locator("tbody tr").nth(i).locator("text=View").click();
+   
+    break;
+}
+}
+const orderIdDetails = await page.locator(".col-text").textContent();
+await  page.pause();
+   expect(response.orderID.includes(orderIdDetails)).toBeTruthy();
+
+
+
+}); //lesson learnt 1) find locator based on text with tag 2)if element we are searching for not eligible for auto wait
+//then wait with other element which is eligible for auto wait and then perform action on the element we are searching for. This is especially useful when we are waiting for some elements to be visible before performing any action on them. 3) if we want to check if the product is added to the cart or not, we can use the locator that will check if the product is visible in the cart page or not. We can also use other locators like text, css, etc. depending on our needs. This is especially useful when we want to verify if the product is added to the cart or not. 4) we can also use other assertions like toBeFalsy if it has to be false and other assertions like toBeVisible, toBeHidden, etc. depending on our needs. This is especially useful when we want to verify if the product is added to the cart or not.
+
+
+
