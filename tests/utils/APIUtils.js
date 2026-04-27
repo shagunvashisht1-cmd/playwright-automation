@@ -7,7 +7,6 @@ constructor(apiContext,loginPayload) //so that it gets used throughout this clas
 }
 async getToken()
 {
-
     const apiResponse= await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", 
         {
         data: this.loginPayload
