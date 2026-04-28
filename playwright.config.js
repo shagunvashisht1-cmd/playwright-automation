@@ -32,7 +32,10 @@ testDir: './tests',
   reporter: 'html',
   use: {
     browserName: 'chromium',
-    headless :false
+    headless :false,
+    screenshot : 'on',
+    trace:'on' , //retain-on-failure, on, off
+
   },
 });
 
