@@ -12,6 +12,7 @@ let response;
 const orderPayload = { orders: [{ country: "Cuba", productOrderedId: "6960eae1c941646b7a8b3ed3" }] }; //payload for the order API call which we will use to place the order in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests.
 const fakePayLoadorders = { data: [], message: "No Orders" }; //Javascript object payload
 
+//steps
 
 test.beforeAll(async () => { //before all test cases this will run
     //just like browser scontext creation and page creation we can also create request object which we can use to make API calls in our tests. 
