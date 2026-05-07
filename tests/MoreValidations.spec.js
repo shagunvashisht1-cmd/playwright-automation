@@ -40,3 +40,27 @@ console.log(text);
  console.log(text.split(" ")[1]); //split the text and get the first word and trim the white spaces from the text. This is especially useful when we want to get a specific part of the text content of the element. We can also use other string methods like slice, substring, etc. depending on our needs. This is especially useful when we want to get a specific part of the text content of the element after performing some actions on the page.
 
 })
+
+test("Screenshot & Visual Comparison", async({page})=>{
+await  page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+
+//Element Visibility
+//await page.screenshot({path: 'screenshot.png'});
+console.log(await page.locator("#displayed-text").isVisible()); //From the id attribute value 
+await expect(page.locator("#displayed-text")).toBeVisible(); //From the id attribute value
+
+await page.locator("#displayed-text").screenshot({path: 'partialscreenshot.png'}); //SS at locator level
+
+await page.locator("#hide-textbox").click(); //From the id attribute value
+
+console.log(await page.locator("#displayed-text").isHidden()); 
+})
+
+
+//screenshot-store-screenshot  : comparison of current with expected
+test.only("Test of Screenshot Comparison",async({page})=>{
+
+await  page.goto("https://google.com/");
+expect(await page.screenshot()).toMatchSnapshot('expectedScreenshot.png');
+
+})
