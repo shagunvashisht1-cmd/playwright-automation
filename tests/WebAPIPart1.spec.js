@@ -1,13 +1,18 @@
 import {test, expect, request}from "@playwright/test"; //request API is used to make API calls in our tests. We can use it to make GET, POST, PUT, DELETE, etc. API calls in our tests. This is especially useful when we want to verify the response of the API calls or when we want to perform some actions based on the response of the API calls. 
  
-
+//If test case is around whether order is succesfully created then do it through UI and if it is around validation of orderID on Order history page or test data setUp then use API
+//Importing API Utils Class
 const {APIUtils} = require('./utils/APIUtils');
+
+
 const loginPayload= {userEmail: "sh.v1@gmail.com", userPassword: "123456789@aS"};//payload for the login API call 
 
 let response;
 // let token;
 // let orderID; //when not initializing use let
 const orderPayload= {   orders: [ { country: "Cuba", productOrderedId: "6960eae1c941646b7a8b3ed3"} ] }; //payload for the order API call which we will use to place the order in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests.
+
+
 test.beforeAll(async()=> { //before all test cases this will run
  //just like browser scontext creation and page creation we can also create request object which we can use to make API calls in our tests. 
  const apiContext= await request.newContext(); //create a new request context which we can use to make API calls in our tests. 
@@ -26,7 +31,7 @@ test("Web API Usage 1", async({page})=>{
     const productTitle= page.locator(".card-body b"); 
     const products= page.locator(".card-body");
     const productName= "ZARA COAT 3";
-    await page.addInitScript(value => {
+    await page.addInitScript(value => { //Purpose of addInitScript : Insert javascript 
     window.localStorage.setItem("token", value); //set the token in the local storage of the browser before the page is loaded. This is especially useful when we want to set some values in the local storage before the page is loaded. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to set some values in the local storage before the page is loaded.
 }, response.token);
     await page.goto("https://rahulshettyacademy.com/client/"); //navigate to the page after setting the token in the local storage of the browser. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser.

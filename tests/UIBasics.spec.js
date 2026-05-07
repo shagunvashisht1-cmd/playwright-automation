@@ -6,6 +6,31 @@ test('Browser context pw test', async ({browser}) => { //browser is a fixture pr
        await page.goto('https://www.google.com/'); //navigate to the URL and wait for the page to load completely before moving to the next step. This is important because if we try to interact with the page before it is fully loaded, we might get errors or unexpected behavior.
 
 });
+
+test.only('Browser Network CSS block', async ({browser}) => { //browser is a fixture provided by Playwright and whatever we define in config file will be available here as a parameter and that browser will be launched, So that's how we can use it in our test. We can also use other fixtures like page, context, etc. depending on our needs.
+    const context = await browser.newContext(); //new browser instance will be created and we can have multiple contexts in a single browser instance, each context will have its own cookies, cache, etc. and they will be isolated from each other. So we can use this to run our tests in parallel without any interference.
+    const page = await context.newPage(); 
+
+    //To block style and design of webpage
+await page.route('**/*.css', route => route.abort()); //regular exp ending with css
+
+
+await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    await page.locator("input#username").fill("rahulshettyacademy");
+await page.locator("input#password").fill("Learning@830$3mK2");
+
+//To block images 
+await page.route('**/*.{jpg,png}', route => route.abort()); 
+
+
+//Listens to all request / response
+page.on('request', request=>console.log(request.url()));
+page.on('response', response=>console.log(response.url(), response.status()));
+await page.locator("input#signInBtn").click();
+
+await page.pause();
+
+});
 test('Page fixture test', async ({page}) => { //page is a fixture provided by Playwright and whatever we define in config file will be available here as a parameter and that page will be created, So that's how we can use it in our test. We can also use other fixtures like browser, context, etc. depending on our needs.
    const userName= page.locator("input#username");
    const titles= page.locator(".card-body a");
@@ -35,7 +60,7 @@ console.log(await titles.allTextContents()); //allTextContents() will give all t
 //allTextContents() will give list of array of text contents of all the elements located by the locator. 
 //if allTextContents() is used first without using textContents() then it will return an empty array because allTextContents() is used to get the text contents of the elements located by the locator and if we don't use textContents() first then it will not be able to get the text contents of the elements and it will return an empty array. So we need to use textContents() first to get the text contents of the elements and then we can use allTextContents() to get the list of array of text contents of all the elements located by the locator.
 });
- test.only("Test Exercise AutoWait", async({page})=>{
+ test("Test Exercise AutoWait", async({page})=>{
     const titles= page.locator("div.card-body b");
 await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 await page.locator("//a[normalize-space()='Register here']").click();    //if we try to click on the element before it is visible, it will throw an error and the test will fail. But if we use the locator and try to click on the element, Playwright will automatically wait for the element to be visible before performing the click action. This is a powerful feature of Playwright that helps us to avoid flaky tests and makes our tests more reliable. So we don't have to worry about waiting for the element to be visible, we can just use the locator and it will take care of the rest.
@@ -53,9 +78,6 @@ console.log(await titles.allTextContents());
 console.log(await titles.first().textContent());
 console.log(await titles.nth(1).textContent());
 console.log(await titles.allTextContents());
-
-
-
 
 });
 

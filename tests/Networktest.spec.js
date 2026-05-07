@@ -43,18 +43,18 @@ test("Netwoek Intercept", async ({ page }) => {
 
     //Mocking /Network Interception
     //route("which url you want to route","how you want to route") 
-    //In url in the end instead of hardcoded value which is dynamic we can use * instead of = for-customer/69d4ede4f86ba51a654f016b
+    //In url in the end instead of hardcoded value which is dynamic user we can use * instead of = for-customer/69d4ede4f86ba51a654f016b
     await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
         async route => {
             //intercepting response = API response ->{playwright fakeresponse} ->browser -> render data on frontend
             const realResponse = await page.request.fetch(route.request());//first turn page mode to api mode to make api calls  by page.request helper
-            let body = JSON.stringify(fakePayLoadorders); //convert havascript object to json
-            route.fulfill( //while fulfilling response will be sent with fakebody
+            let body = JSON.stringify(fakePayLoadorders); //convert javascript object to json
+            route.fulfill( //while fulfilling response will be sent with fakebody //Response Modification
                 {
-                    realResponse,
-                    body,
+                    realResponse, //sending same response
+                    body, //overriding body
                 }
-            ) //fulfill means sending response to browser
+            ) //fulfill means sending response to browser //in fulfill body if we dont send anything explicitly then whatever is present with that route will be sent, & if something is passed then that will be  overridden with existing
         }
     );
 
@@ -67,7 +67,7 @@ test("Netwoek Intercept", async ({ page }) => {
     //" You have No Orders to show at this time."
     //await page.waitForLoadState("networkidle");
     //await page.waitForTimeout(1000);
-    await page.waitForResponse("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*");
+    await page.waitForResponse("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*"); //if we use page.pause in place of this then also it works but if we dont use pause better use this
     //await page.locator(".mt-4").waitFor(); //This one dint work above mentioned worked
     const text = await page.locator(".mt-4").textContent();
     console.log(text);

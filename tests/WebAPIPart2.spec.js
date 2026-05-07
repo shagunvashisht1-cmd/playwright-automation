@@ -6,7 +6,8 @@
 /* If there are 5 test scenarios like cart, order, order details, history
 then for second scenario we can inject same storage state json in the test browser.newContext(json) */ //SHIFT+ALT+A comment multiple lines
  const {test, expect} =require ("@playwright/test");
-let webContext; //created globally so can be accessed everywhere
+
+ let webContext; //created globally so can be accessed everywhere
 
  test.beforeAll( async({browser})=>{
 
@@ -29,7 +30,7 @@ test("Test 1", async()=>{ //since page is created again dynamically need not to 
     
     const productName= "ZARA COAT 3";
     const email= "sh.v1@gmail.com";
-     const page=await webContext.newPage(); //CREATED new page
+     const page=await webContext.newPage(); //CREATED new page dynamically
    await page.goto("https://rahulshettyacademy.com/client");
    const products= page.locator(".card-body");
    const titles=await page.locator(".card-body b").allTextContents();
