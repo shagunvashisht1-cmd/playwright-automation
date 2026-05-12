@@ -2,16 +2,35 @@
   "name": "pw_js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": { 
-    "test" : "npx playwright test WebAPIPart1.spec.js --headed"
-  },
   "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/shagunvashisht1-cmd/playwright-automation#readme",
+  "bugs": {
+    "url": "https://github.com/shagunvashisht1-cmd/playwright-automation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shagunvashisht1-cmd/playwright-automation.git"
+  },
   "license": "ISC",
+  "author": "",
   "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npx playwright test WebAPIPart1.spec.js --headed"
+  },
+  "dependencies": {
+    "playwright": "^1.58.2",
+    "playwright-core": "^1.58.2",
+    "undici-types": "^7.18.2"
+  },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.5.0"
+  },
+   "excelDependencies": {
+    "exceljs": "^4.4.0"
   }
 }
