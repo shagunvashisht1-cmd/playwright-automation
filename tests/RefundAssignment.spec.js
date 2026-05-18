@@ -118,6 +118,7 @@ await expect(resultelement).toContainText("Group bookings (3 tickets) are non-re
 
 })
 
+/* Solution
 
 import { test, expect } from '@playwright/test';
 
@@ -134,7 +135,7 @@ async function loginAndGoToBooking(page) {
   await expect(page.getByRole('link', { name: 'Browse Events →' })).toBeVisible();
 }
 
-/* Solution
+
 
 // ── Test 1: 1 ticket → eligible ───────────────────────────────────────────────
 test('refund eligible for single ticket booking', async ({ page }) => {
