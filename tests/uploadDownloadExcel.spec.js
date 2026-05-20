@@ -5,8 +5,10 @@ const {test,expect} = require('@playwright/test'); //import dependency into this
 //1. Using then()
 /* const workbook = new excelJS.Workbook(); //object created for the class and now we can access its methods like Workbook()
 
-workbook.xlsx.readFile("C:/Users/Abhishek Sharma/Downloads/excelDownloadTest.xlsx").then(function() {//read the file and then we can access its methods like xlsx.readFile() and pass the path of the file
-const worksheet=workbook.getWorksheet('Sheet1'); 
+workbook.xlsx.readFile("C:/Users/Abhishek Sharma/Downloads/excelDownloadTest.xlsx").then(function() {//read the file and then we can access its methods like xlsx.readFile() and pass the path of the file //js is asynchronous language so we have to use then() to wait for the file to be read before we can access its methods like getWorksheet() and eachRow() etc.
+//or use await before workbook and wrap entire function in async function & call the function to execute in end
+
+// const worksheet=workbook.getWorksheet('Sheet1'); 
 
 //print all values in the sheet by reading
 worksheet.eachRow((row,rowNumber)=>{
@@ -15,7 +17,7 @@ worksheet.eachRow((row,rowNumber)=>{
     });
     console.log(row.values);
 })
-}); */
+}); */ //js code run in terminal by giving node jsfilename.js command
 
 //2. Using async await
 
