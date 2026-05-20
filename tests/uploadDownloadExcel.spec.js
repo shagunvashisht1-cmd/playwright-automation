@@ -1,4 +1,4 @@
-const excelJS = require('excelJS'); //import dependency into this file
+const excelJS = require('excelJS'); //import dependency into this file //const excelJS is class
 const {test,expect} = require('@playwright/test'); //import dependency into this file
 
 //For adding wait either use then() or async await

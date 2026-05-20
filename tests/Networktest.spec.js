@@ -45,7 +45,7 @@ test("Netwoek Intercept", async ({ page }) => {
     //route("which url you want to route","how you want to route") 
     //In url in the end instead of hardcoded value which is dynamic user we can use * instead of = for-customer/69d4ede4f86ba51a654f016b
     await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
-        async route => {
+        async (route) => {
             //intercepting response = API response ->{playwright fakeresponse} ->browser -> render data on frontend
             const realResponse = await page.request.fetch(route.request());//first turn page mode to api mode to make api calls  by page.request helper
             let body = JSON.stringify(fakePayLoadorders); //convert javascript object to json
