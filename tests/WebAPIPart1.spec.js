@@ -3,7 +3,7 @@ import {test, expect, request}from "@playwright/test"; //request API is used to 
 //If test case is around whether order is succesfully created then do it through UI and if it is around validation of orderID on Order history page or test data setUp then use API
 //Importing API Utils Class
 const {APIUtils} = require('../utils/APIUtils');
-
+// ./same folder  ../ other folder
 
 const loginPayload= {userEmail: "sh.v1@gmail.com", userPassword: "123456789@aS"};//payload for the login API call 
 

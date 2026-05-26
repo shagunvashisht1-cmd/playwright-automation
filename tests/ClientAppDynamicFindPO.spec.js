@@ -1,6 +1,6 @@
 import {test, expect}from "@playwright/test";
 //import LoginPage from "./pageObjects/LoginPage"; Can't use as module.exports used in js file, so we need to use require method to import the file.
-const {POManager} = require ("./pageObjects/POManager"); //this is the way to import the file when we are using module.exports in the js file. We can also use other methods like import, etc. depending on our needs. This is especially useful when we want to use the page object model in our tests.
+const {POManager} = require ("../pageObjects/POManager"); //this is the way to import the file when we are using module.exports in the js file. We can also use other methods like import, etc. depending on our needs. This is especially useful when we want to use the page object model in our tests.
 // ./same folder  ../ other folder
 test("Dynamic Find Product", async({page})=>{
   
