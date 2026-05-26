@@ -11,7 +11,7 @@ test.only('Browser Network CSS block', async ({browser}) => { //browser is a fix
     const context = await browser.newContext(); //new browser instance will be created and we can have multiple contexts in a single browser instance, each context will have its own cookies, cache, etc. and they will be isolated from each other. So we can use this to run our tests in parallel without any interference.
     const page = await context.newPage(); 
 
-    //To block style and design of webpage
+    //To block style and design of webpage //Usage of route.abort()
 await page.route('**/*.css', route => route.abort()); //regular exp ending with css
 
 

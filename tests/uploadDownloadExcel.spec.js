@@ -65,7 +65,7 @@ async function replaceValueAndWriteInExcel(searchText, replacementText, change,f
     const worksheet = workbook.getWorksheet('Sheet1');
     //print all values in the sheet by reading
     const output = await readExcelFunction(worksheet,searchText, replacementText,fileName); //ou
-
+//read and write are async functions so we have to use await to wait for the changes to be written to the file before we can read it again
     /* if (output.column === -1) {
         console.log("Banana not found in the sheet");
         return;
