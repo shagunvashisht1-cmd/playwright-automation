@@ -14,9 +14,9 @@ await this.page.goto("https://rahulshettyacademy.com/client/#/auth/login");
  }
 
 
- async validLogin(emailInput,passwordInput){
-await this.emailInput.fill(emailInput);
-await this.passwordInput.fill(passwordInput);
+ async validLogin(email,password){
+await this.emailInput.fill(email);
+await this.passwordInput.fill(password);
 await this.SignInBtn.click();
 await this.page.waitForLoadState("networkidle"); //wait for the network to be idle before performing any action on the page. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some API calls to be completed before performing any action on the page.
 

@@ -9,7 +9,7 @@ this.page=page;
     await this.productTitle.first().waitFor();
     //console.log(await productTitle.allTextContents());
     const count= await this.products.count();
-    for(let i=1; i<count; ++i){
+    for(let i=0; i<count; ++i){
         if(await this.products.nth(i).locator("b").textContent() === productName){
           //add to cart
           console.log(await this.products.nth(i).locator("b").textContent());
