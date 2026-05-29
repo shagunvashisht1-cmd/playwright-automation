@@ -2,18 +2,17 @@ import {test, expect, request}from "@playwright/test"; //request API is used to 
  
 //If test case is around whether order is succesfully created then do it through UI and if it is around validation of orderID on Order history page or test data setUp then use API
 //Importing API Utils Class
-const {APIUtils} = require('./utils/APIUtils');
-
+const {APIUtils} = require('../utils/APIUtils');
+// ./same folder  ../ other folder
 
 const loginPayload= {userEmail: "sh.v1@gmail.com", userPassword: "123456789@aS"};//payload for the login API call 
 
 let response;
 // let token;
-// let orderID; //when not initializing use let
-const orderPayload= {   orders: [ { country: "Cuba", productOrderedId: "6960eae1c941646b7a8b3ed3"} ] }; //payload for the order API call which we will use to place the order in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests. We can also use other payloads for other API calls depending on our needs. This is especially useful when we want to place an order using API calls in our tests.
-
-
-test.beforeAll(async()=> { //before all test cases this will run
+// let orderID; //when not initializing use let 
+const orderPayload= {   orders: [ { country: "Cuba", productOrderedId: "6960eae1c941646b7a8b3ed3"} ] }; //payload for the order API call which we will use to place the order in our tests. 
+//At runtime js object gets converted to JSON object and then sent to the API call. This is especially useful when we want to send some data in the body of the API call. 
+test.beforeAll(async()=> { //before all test cases this will run //API calls should be made in beforeAll block because we want to use the response of the API calls in our tests
  //just like browser scontext creation and page creation we can also create request object which we can use to make API calls in our tests. 
  const apiContext= await request.newContext(); //create a new request context which we can use to make API calls in our tests. 
  //url from network header , data / body from payload and headers from request headers of the API call which we want to make in our tests. 
@@ -31,7 +30,8 @@ test("Web API Usage 1", async({page})=>{
     const productTitle= page.locator(".card-body b"); 
     const products= page.locator(".card-body");
     const productName= "ZARA COAT 3";
-    await page.addInitScript(value => { //Purpose of addInitScript : Insert javascript 
+    //addInitScript accepts function, parameter passed
+    await page.addInitScript(value => { //Purpose of addInitScript : Insert javascript 1 item, for more than 1 we can use storage state mentioned in part 2
     window.localStorage.setItem("token", value); //set the token in the local storage of the browser before the page is loaded. This is especially useful when we want to set some values in the local storage before the page is loaded. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to set some values in the local storage before the page is loaded.
 }, response.token);
     await page.goto("https://rahulshettyacademy.com/client/"); //navigate to the page after setting the token in the local storage of the browser. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we want to navigate to a page after setting some values in the local storage of the browser.

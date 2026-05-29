@@ -9,8 +9,8 @@ then for second scenario we can inject same storage state json in the test brows
 
  let webContext; //created globally so can be accessed everywhere
 
- test.beforeAll( async({browser})=>{
-
+ test.beforeAll( async({browser})=>{ //Logging once and then using storage state in all test cases, so beforeAll block is used to perform login once and then use the storage state in all test cases. This is especially useful when there are multiple test cases that require login and we want to avoid logging in before each test case. This can save time and make our tests more efficient.
+    //This approach is used when we dont want to make api call for login, just want to login through UI once and then use the storage state in all test cases. 
   const context=  await browser.newContext();
   const page=await context.newPage();
 

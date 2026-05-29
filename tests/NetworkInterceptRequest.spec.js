@@ -11,7 +11,8 @@ test("Security test request Intercept", async ({ page }) => {
     await page.waitForLoadState("networkidle"); //wait for the network to be idle before performing any action on the page. This is a common action that we perform in our tests, so it's important to know how to do it correctly. We can also use other actions like click, fill, etc. depending on our needs. This is especially useful when we are waiting for some API calls to be completed before performing any action on the page.
     await productTitle.first().waitFor();
 
-    await page.locator("button[routerlink*='myorders']").click();
+    await page.locator("button[routerlink*='myorders']").click(); 
+    //route.abort in UI Basics test file
 
     await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=*",
         //continue for request modification

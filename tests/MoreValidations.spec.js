@@ -45,7 +45,7 @@ test("Screenshot & Visual Comparison", async({page})=>{
 await  page.goto("https://rahulshettyacademy.com/AutomationPractice/");
 
 //Element Visibility
-//await page.screenshot({path: 'screenshot.png'});
+//await page.screenshot({path: 'screenshot.png'}); //SS at page level
 console.log(await page.locator("#displayed-text").isVisible()); //From the id attribute value 
 await expect(page.locator("#displayed-text")).toBeVisible(); //From the id attribute value
 
@@ -60,7 +60,6 @@ console.log(await page.locator("#displayed-text").isHidden());
 //screenshot-store-screenshot  : comparison of current with expected
 test.only("Test of Screenshot Comparison",async({page})=>{
 
-await  page.goto("https://google.com/");
-expect(await page.screenshot()).toMatchSnapshot('expectedScreenshot.png');
-
+await  page.goto("https://google.com/"); //where page not getting updated after a minute or so then we can use toMatchSnapshot method to compare the current screenshot with the expected screenshot which we have stored in the screenshots folder.
+expect(await page.screenshot()).toMatchSnapshot('expectedScreenshot.png'); //at first it fails as there is no expected screenshot in the screenshots folder but after we run the test it will create the expected screenshot in the screenshots folder and then we can run the test again to compare the current screenshot with the expected screenshot.
 })

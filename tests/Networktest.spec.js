@@ -1,7 +1,7 @@
 import { test, expect, request } from "@playwright/test"; //request API is used to make API calls in our tests. We can use it to make GET, POST, PUT, DELETE, etc. API calls in our tests. This is especially useful when we want to verify the response of the API calls or when we want to perform some actions based on the response of the API calls. 
 
 //Importing API Utils Class
-const { APIUtils } = require('./utils/APIUtils');
+const { APIUtils } = require('../utils/APIUtils');
 
 
 const loginPayload = { userEmail: "sh.v1@gmail.com", userPassword: "123456789@aS" };//payload for the login API call 
@@ -26,7 +26,7 @@ test.beforeAll(async () => { //before all test cases this will run
 
 // })
 
-test("Netwoek Intercept", async ({ page }) => {
+test("Network Intercept", async ({ page }) => {
 
     const productTitle = page.locator(".card-body b");
     const products = page.locator(".card-body");
@@ -45,14 +45,14 @@ test("Netwoek Intercept", async ({ page }) => {
     //route("which url you want to route","how you want to route") 
     //In url in the end instead of hardcoded value which is dynamic user we can use * instead of = for-customer/69d4ede4f86ba51a654f016b
     await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
-        async route => {
+        async (route) => {
             //intercepting response = API response ->{playwright fakeresponse} ->browser -> render data on frontend
             const realResponse = await page.request.fetch(route.request());//first turn page mode to api mode to make api calls  by page.request helper
             let body = JSON.stringify(fakePayLoadorders); //convert javascript object to json
             route.fulfill( //while fulfilling response will be sent with fakebody //Response Modification
                 {
                     realResponse, //sending same response
-                    body, //overriding body
+                    body, //overriding body of fake payload
                 }
             ) //fulfill means sending response to browser //in fulfill body if we dont send anything explicitly then whatever is present with that route will be sent, & if something is passed then that will be  overridden with existing
         }
