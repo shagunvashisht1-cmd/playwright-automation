@@ -19,18 +19,23 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npx playwright test WebAPIPart1.spec.js --headed"
+    "regression": "npx playwright test",
+    "webTest": "npx playwright test --grep \"@Web\"",
+    "APITest": "npx playwright test --grep \"@API\"",
+    "chromeNewConfig": "npx playwright test ClientAppDynamicFindPO.spec.js --config playwright.configNew.js --project=\"chrome execution\""
   },
   "dependencies": {
+    "exceljs": "^4.4.0",
     "playwright": "^1.58.2",
     "playwright-core": "^1.58.2",
     "undici-types": "^7.18.2"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^25.5.0"
+  "devDependencies": { 
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.5.0",
+    "allure-playwright": "^3.9.0"
   },
-   "excelDependencies": {
+  "excelDependencies": {
     "exceljs": "^4.4.0"
   }
 }

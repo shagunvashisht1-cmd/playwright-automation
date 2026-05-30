@@ -1,5 +1,5 @@
 import {test, expect}from "@playwright/test";
-test("Select DropDown", async ({page})=>{
+test("@Web Select DropDown", async ({page})=>{
     //Select Dropdown are static dropdowns, they are not dynamic like the one we have in Angular or React. They are simple HTML select elements that we can interact with using the selectOption method. We can select an option by its value, label, or index. In this example, we will select an option by its value.
    const userName= page.locator("input#username");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");

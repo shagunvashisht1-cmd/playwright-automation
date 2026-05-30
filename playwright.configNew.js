@@ -10,6 +10,17 @@ import { config } from 'node:process';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+
+// This is used for cross browser testing
+
+/* //If want to create different config then
+//Terminal command to run different config file: npx pw test fileName.js --config newConfigName.js
+
+//If dont want to create diff config use projects: [] array and define properties 
+// npx playwright test CustomTestFixturePassed.spec.js --config playwright.configNew.js --project="chrome execution"
+// If project name not specified while run then it will run all the browsers mentioned with settings defined*/
+
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -20,15 +31,14 @@ import { config } from 'node:process';
 //export defineConfig({ //basically a variable storing the configuration object which we will export at the end of the file and use it in our tests. We can also use this variable to define different configurations for different environments like staging, production, etc. and then we can use the appropriate configuration in our tests based on the environment we are running the tests in.
 const configO = ({ //js object storing config in key value pair format, where key is the name of the configuration option and value is the value of that option. We can also use this object to define different configurations for different environments like staging, production, etc. and then we can use the appropriate configuration in our tests based on the environment we are running the tests in.
   testDir: './tests',
-
-  retries: 1,//how many times it will retry 
+  
+  //Config at object level set retry to  run flaky test Retries applied at overall project
+  retries: 1 ,//how many times it will retry 
   //If test pass in retry run then it is counted as flaky not passed
 
 
-  //workers: 2, //disabling parallel mechanism //how many at a time Test files will run
-
-  /* to override default timeout 30000ms */
-  timeout: 30000,
+    /* to override default timeout 30000ms */
+    timeout: 30000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -36,28 +46,46 @@ const configO = ({ //js object storing config in key value pair format, where ke
      */
     timeout: 5000
   },
-  reporter: 'html', //html reports gets generated in pw-report folder : index.html copy path and open in browser
-//npm i -D @playwright/test allure-playwright  To Install allure plugin
-//npx playwright test --grep "@Web" --reporter=line,allure-playwright //just like html report there is line report which generates plain text report which act as input for allure report
-//npm install -g allure-commandline --save-dev to download report generation tool , Also need jdk installed and java path set
-// after test execution run : open html report from allure-result folder:-  allure generate ./allure-results reads json format files and convert into html report
-// allure generate ./allure-results --clean cleans folder first then generate new results
-// allure open ./allure-report or allure open to open report
+  reporter: 'html',
+  projects: [ //Use this if dont want to create multiple configs
 
-/* | Package              | Purpose                     |
-| -------------------- | --------------------------- |
-| `allure-playwright`  | Creates allure result files |
-| `allure-commandline` | Generates/open HTML report  |
+    {
+      name: "safari execution",
+      use: {
+        browserName: 'Webkit',  //Updated config
+        headless: true,  //Updated config
+        screenshot: 'off', // 'only=on-failure'
+        trace: 'on', //retain-on-failure, on, off
 
- */
 
-  use: {
-    browserName: 'chromium',
-    headless: false,
-    screenshot: 'on', // 'only=on-failure'
-    trace: 'on', //retain-on-failure, on, off
+      //  ...devices['iPhone 11'] //browser size defined based on device provided
 
-  },
+      }
+    },
+
+    {
+      name: "chrome execution",
+      use: {
+        browserName: 'chromium',
+        headless: false,
+        screenshot: 'on', // 'only=on-failure'
+        trace: 'on', //retain-on-failure, on, off Using Trace we can generate logs in pw
+
+        //For testing webresponsive testing where we check elements fitting in webpage or not
+        viewport: { width: 720, height: 720 }, //Another option if not provided takes default size , browser size 
+        //If app is mobile friendly then decreasing viewport should work
+
+        //...devices['Galaxy A55'] //browser size defined based on device provided
+
+        ignoreHttpsErrors: true, //to avoid ssl certificate error on page where advanced nutton needs to be clicked
+        permissions: ['geolocation'], //when location pop up appears on page, this can be used to handle
+
+        video: 'retain-on-failure'
+      }
+    }
+
+  ]
+
 });
 
 
