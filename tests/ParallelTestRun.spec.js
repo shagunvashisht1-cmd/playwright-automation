@@ -14,7 +14,7 @@ test.describe.configure({mode: 'serial'}); //To run test in a file in serail mod
 
 
 //Define tag in test for segregrate test cases
-//npx playwright test --grep "@Web : 1) Mention particular tag eg. @Web in test and then run the command ""
+//npx playwright test --grep "@Web" : 1) Mention particular tag eg. @Web in test and then run the command ""
 
 
 
